@@ -590,6 +590,7 @@
       .about-grid, .resume-grid, .contact-inner { grid-template-columns: 1fr; }
       .about-img-wrap { max-width: 340px; }
       .form-row { grid-template-columns: 1fr; }
+      .form-submit-row { flex-direction: column; }
       .nav-links { display: none; flex-direction: column; gap: 20px; position: fixed; inset: 0; background: rgba(10,10,15,0.97); backdrop-filter: blur(20px); align-items: center; justify-content: center; z-index: 400; }
       .nav-links.open { display: flex; }
       .nav-toggle { display: flex; z-index: 501; }
@@ -868,7 +869,7 @@
           <label>Message</label>
           <textarea id="contactMessage" placeholder="Tell me about your project..."></textarea>
         </div>
-        <div style="display: flex; gap: 16px; margin-top: 10px;">
+        <div class="form-submit-row" style="display: flex; gap: 16px; margin-top: 10px;">
           <button class="submit-btn" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="sendWhatsApp(event)">
             WhatsApp <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i>
           </button>
