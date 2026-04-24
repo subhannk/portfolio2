@@ -526,10 +526,13 @@
       color: #0a0a0f;
       font-family: 'Syne', sans-serif;
       font-weight: 800; font-size: 0.9rem; letter-spacing: 2px;
-      text-transform: uppercase; border: none; border-radius: 2px;
-      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+      text-transform: uppercase; border: 1px solid transparent; border-radius: 2px;
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
     }
     .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(240,224,64,0.3); }
+    
+    .btn-email { background: transparent; border-color: var(--accent); color: var(--text); }
+    .btn-email:hover { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
 
     /* ── FOOTER ── */
     footer {
@@ -850,22 +853,29 @@
         <div class="form-row">
           <div class="form-group">
             <label>Name</label>
-            <input type="text" placeholder="Your name">
+            <input type="text" id="contactName" placeholder="Your name">
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" placeholder="your@email.com">
+            <input type="email" id="contactEmail" placeholder="your@email.com">
           </div>
         </div>
         <div class="form-group">
           <label>Subject</label>
-          <input type="text" placeholder="Project / Collaboration / Other">
+          <input type="text" id="contactSubject" placeholder="Project / Collaboration / Other">
         </div>
         <div class="form-group">
           <label>Message</label>
-          <textarea placeholder="Tell me about your project..."></textarea>
+          <textarea id="contactMessage" placeholder="Tell me about your project..."></textarea>
         </div>
-        <button class="submit-btn" onclick="handleSubmit(event)">Send Message →</button>
+        <div style="display: flex; gap: 16px; margin-top: 10px;">
+          <button class="submit-btn" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="sendWhatsApp(event)">
+            WhatsApp <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i>
+          </button>
+          <button class="submit-btn btn-email" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="sendEmail(event)">
+            Email <i class="fa-solid fa-envelope" style="font-size: 1.1rem;"></i>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -943,12 +953,52 @@
     document.querySelectorAll('.resume-block').forEach(b=>skillObs.observe(b));
 
     // ── FORM ──
-    function handleSubmit(e){
+    function getFormData() {
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const subject = document.getElementById('contactSubject').value.trim();
+      const message = document.getElementById('contactMessage').value.trim();
+      return { name, email, subject, message };
+    }
+
+    function sendWhatsApp(e) {
       e.preventDefault();
-      const btn = e.target;
-      btn.textContent = 'Message Sent ✓';
+      const { name, email, subject, message } = getFormData();
+      if (!name || !message) {
+        alert('Please fill in your name and message.');
+        return;
+      }
+      const text = `Hi Subhan,%0A%0AI am *${name}* (${email}).%0A%0A*Subject:* ${subject}%0A*Message:* ${message}`;
+      const whatsappUrl = `https://wa.me/919946684018?text=${text}`;
+      window.open(whatsappUrl, '_blank');
+      showSuccess(e.currentTarget);
+    }
+
+    function sendEmail(e) {
+      e.preventDefault();
+      const { name, email, subject, message } = getFormData();
+      if (!name || !message) {
+        alert('Please fill in your name and message.');
+        return;
+      }
+      const body = `Hi Subhan,%0D%0A%0D%0AI am ${name} (${email}).%0D%0A%0D%0AMessage:%0D%0A${message}`;
+      const mailtoUrl = `mailto:subhannk2002@gmail.com?subject=${encodeURIComponent(subject || 'Portfolio Contact')}&body=${body}`;
+      window.location.href = mailtoUrl;
+      showSuccess(e.currentTarget);
+    }
+
+    function showSuccess(btn) {
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = 'Sent ✓';
       btn.style.background = '#2ecc71';
-      setTimeout(()=>{ btn.textContent='Send Message →'; btn.style.background=''; },3000);
+      btn.style.borderColor = '#2ecc71';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 3000);
     }
   </script>
 </body>
