@@ -79,20 +79,20 @@ const ProjectCard = ({ project, index }) => {
 const Projects = () => {
   const projectsData = [
     {
-      num: '01 /',
-      title: 'LedgerPro',
-      desc: 'LedgerPro is a simple app to track income, expenses built with React and Tailwind CSS.',
-      image: 'images/ledgerpro.png',
-      tags: ['React', 'Tailwind'],
-      url: 'https://ledger-mxee7m0g8-subhannks-projects.vercel.app/'
-    },
-    {
       num: '02 /',
       title: 'LMS learnix',
       desc: 'Learnix is a fast, modern online learning platform built with React and Tailwind CSS.',
       image: 'images/5de63102937d14a8350c852d3bf689be.jpg',
       tags: ['react', 'Taiwind CSS', 'JavaScript'],
       url: 'https://lms-learnix-2.vercel.app/'
+    },
+    {
+      num: '01 /',
+      title: 'LedgerPro',
+      desc: 'LedgerPro is a simple app to track income, expenses built with React and Tailwind CSS.',
+      image: 'images/ledgerpro.png',
+      tags: ['React', 'Tailwind'],
+      url: 'https://ledger-mxee7m0g8-subhannks-projects.vercel.app/'
     },
     {
       num: '03 /',
